@@ -1,6 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import SignupPage from "@/views/SignupPage.vue";
+import SigninPage from "@/views/SigninPage.vue";
+//import PreferencesPage from "@/views/PreferencesPage.vue";
+//import Authguard from "./authguard.js";
 
 Vue.use(VueRouter);
 
@@ -11,6 +15,16 @@ const routes = [
     component: Home
   },
   {
+    path: "/signup",
+    name: "SignupPage",
+    component: SignupPage
+  },
+  {
+    path: "/signin",
+    name: "SigninPage",
+    component: SigninPage
+  },
+  {
     path: "/about",
     name: "About",
     // route level code-splitting
@@ -18,6 +32,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/preferences",
+    name: "PreferencesPage",
+    component: () =>
+      import(
+        /* webpackChunkName: "preferences" */ "../views/PreferencesPage.vue"
+      )
   }
 ];
 
