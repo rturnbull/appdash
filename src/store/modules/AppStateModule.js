@@ -5,8 +5,6 @@ const state = {
   navDrawer: {
     navDrawerStaticSettings: {
       clipped: true,
-      dense: true,
-      right: false,
       absolute: true,
       color: "secondary",
       colorOptions: ["primary", "secondary", "accent"],
@@ -14,35 +12,40 @@ const state = {
       dark: false
     },
     navDrawerUserSettings: {
-      name: "DEFAULT_SLIDE_OUT",
+      key: "DEFAULT_SLIDE_OUT",
+      dense: true,
+      right: false,
       value: false,
       mini: false,
       expandOnHover: false,
       permanent: false,
-      temporary: true,
-      hideOverlay: null
+      temporary: true
     },
     navDrawerOptions: [
       {
-        name: "DEFAULT_SLIDE_OUT",
+        key: "DEFAULT_SLIDE_OUT",
+        dense: true,
+        right: false,
         value: false,
         mini: false,
         expandOnHover: false,
         permanent: false,
-        temporary: true,
-        hideOverlay: null
+        temporary: true
       },
       {
-        name: "DEFAULT_PERMANENT",
+        key: "DEFAULT_PERMANENT",
+        dense: true,
+        right: false,
         value: false,
         mini: false,
         expandOnHover: false,
         permanent: true,
-        temporary: false,
-        hideOverlay: null
+        temporary: false
       },
       {
-        name: "MINI_SLIDE_OUT",
+        key: "MINI_SLIDE_OUT",
+        dense: true,
+        right: false,
         value: false,
         mini: true,
         expandOnHover: true,
@@ -50,13 +53,14 @@ const state = {
         temporary: true
       },
       {
-        name: "MINI_PERMANENT",
+        key: "MINI_PERMANENT",
+        dense: true,
+        right: false,
         value: false,
         mini: true,
         expandOnHover: true,
         permanent: true,
-        temporary: null,
-        hideOverlay: null
+        temporary: false
       }
     ]
   }
@@ -82,10 +86,14 @@ const mutations = {
   }
 };
 const actions = {
-  applyNavDrawerUserPreference: function({ commit }, pref) {
+  applyNavDrawerUserPreferences: function({ commit }, prefs) {
+    console.log("prefs: " + JSON.stringify(prefs));
     let options = state.navDrawer.navDrawerOptions;
     for (let i = 0; i < options.length; i++) {
-      if (options[i].name === pref) {
+      if (options[i].key === prefs.navDrawerPreference) {
+        options[i].expandOnHover = prefs.navDrawerExpandOnHover;
+        options[i].dense = prefs.navDrawerDense;
+        options[i].right = prefs.navDrawerRight;
         commit("setNavDrawerUserSettings", options[i]);
         break;
       }

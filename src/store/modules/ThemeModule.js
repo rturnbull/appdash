@@ -21,7 +21,8 @@ const state = {
       error: "#FF5252",
       success: "#4CAF50",
       warning: "#FFC107",
-      active: true
+      active: true,
+      default: true
     },
     {
       name: "Subdued & Professional",
@@ -32,8 +33,7 @@ const state = {
       info: "#2a3132",
       success: "#4CAF50",
       warning: "#FFC107",
-      active: false,
-      default: true
+      active: false
     },
     {
       name: "Crisp & Dramatic",

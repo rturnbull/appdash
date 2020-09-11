@@ -10,18 +10,31 @@
             </p>
           </v-card-text>
 
-          <v-radio-group v-model="navDrawerPref" column>
+          <v-radio-group v-model="selected">
             <v-radio
-              label="Default, slide-out"
-              value="DEFAULT_SLIDE_OUT"
+              v-for="(option, index) in this.navDrawerUserOptions"
+              :key="index"
+              :label="option.name"
+              :value="option.key"
             ></v-radio>
-            <v-radio
-              label="Default, permanent"
-              value="DEFAULT_PERMANENT"
-            ></v-radio>
-            <v-radio label="Mini, slide-out" value="MINI_SLIDE_OUT"></v-radio>
-            <v-radio label="Mini, permanent" value="MINI_PERMANENT"></v-radio>
           </v-radio-group>
+
+          <v-card-subtitle>
+            <v-switch dense label="Expand on hover" v-model="expandOnHover">
+            </v-switch>
+            Applies to the mini variant. Expands the drawer when you hover over
+            it, or tap it, if on a mobil device.
+          </v-card-subtitle>
+
+          <v-card-subtitle>
+            <v-switch dense label="Dense" v-model="dense"> </v-switch>
+            Sets the navigation items closer together
+          </v-card-subtitle>
+
+          <v-card-subtitle>
+            <v-switch dense label="Right" v-model="right"> </v-switch>
+            Displays the navigation drawer on the right of the screen
+          </v-card-subtitle>
 
           <!-- BUTTONS -->
           <v-card-actions>
@@ -40,38 +53,43 @@
 </template>
 
 <script>
+"use strict";
 export default {
   name: "NavDrawerPreferences",
   data: function() {
     return {
-      navDrawerPref: null
+      selected: null,
+      dense: true,
+      right: true,
+      expandOnHover: true
     };
   },
-  computed: {
-    /*     navDrawerPreference: function() {
-      return this.$state.getters["AppState/navDrawerPreference"];
-    }, */
-    /*     navDrawerSettings: function() {
-      return this.$state.getters["AppState/navDrawerSettings"];
-    } */
+  mounted: function() {
+    this.selected = this.$store.getters["AppState/navDrawerUserSettings"].key;
   },
-  watch: {
-    navDrawerPref: function() {
-      this.setNavDrawerPreference();
+  computed: {
+    navDrawerUserOptions: function() {
+      return this.$store.getters["UserPrefs/navDrawerUserOptions"];
     }
   },
   methods: {
     onApply: function() {
-      return null;
+      var uid = this.$store.getters["Auth/user"].uid;
+      var prefs = {
+        navDrawerPreference: this.selected,
+        navDrawerExpandOnHover: this.expandOnHover,
+        navDrawerDense: this.dense,
+        navDrawerRight: this.right
+      };
+      this.$store.dispatch(
+        "UserPrefs/saveNavDrawerUserPreferences",
+        prefs,
+        uid
+      );
+      //saveNavDrawerUserPreferences
     },
     onReset: function() {
       return null;
-    },
-    setNavDrawerPreference: function() {
-      this.$store.dispatch(
-        "AppState/setNavDrawerPreference",
-        this.navDrawerPref
-      );
     }
   }
 };

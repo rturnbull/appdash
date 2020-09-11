@@ -40,7 +40,6 @@ export default {
       { text: "Navigation", icon: "mdi-menu" },
       { text: "Another One", icon: "mdi-flag" }
     ]
-  }),
-  computed: {}
+  })
 };
 </script>

@@ -6,34 +6,21 @@
       <v-navigation-drawer
         app
         v-model="drawer"
-        :dense="this.navDrawerStaticSettings.dense"
         :color="this.navDrawerStaticSettings.color"
         :dark="this.navDrawerStaticSettings.dark"
         :mini-variant-width="this.navDrawerStaticSettings.miniVariantWidth"
-        :right="this.navDrawerStaticSettings.right"
         :clipped="this.navDrawerStaticSettings.clipped"
-        :key="key"
+        :dense="this.navDrawerUserSettings.dense"
+        :right="this.navDrawerUserSettings.right"
         :value="this.navDrawerUserSettings.value"
         :mini-variant="this.navDrawerUserSettings.mini"
         :expand-on-hover="this.navDrawerUserSettings.expandOnHover"
         :permanent="this.navDrawerUserSettings.permanent"
         :temporary="this.navDrawerUserSettings.temporary"
-        :hide-overlay="this.navDrawerUserSettings.hideOverlay"
-      />
+      >
+      </v-navigation-drawer>
 
-      <!--       <v-navigation-drawer
-        app
-        xv-model="drawer"
-        color="secondary"
-        mini-variant="true"
-        mini-variant-width="60"
-        clipped="true"
-        value="true"
-        xexpand-on-hover="true"
-        permanent="true"
-        xtemporary="false"
-        /> -->
-      <v-app-bar color="primary" dark clipped-left app>
+      <v-app-bar color="primary" dark clipped-left clipped-right app>
         <v-app-bar-nav-icon
           @click.native.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
@@ -113,16 +100,20 @@ export default {
     user() {
       if (this.user) {
         this.loadProfile();
-        this.loadUserPreferences();
+        this.loadNavDrawerUserPreferences();
+        this.loadThemeUserPreferences();
       }
     },
     activeTheme() {
       this.setTheme();
     },
-    navDrawerUserPref() {
-      if (this.navDrawerUserPref) {
-        this.applyNavDrawerUserPreference();
+    navDrawerUserPrefs() {
+      if (this.navDrawerUserPrefs) {
+        this.applyNavDrawerUserPreferences();
       }
+    },
+    themeUserPrefs() {
+      this.setActiveTheme();
     }
   },
   computed: {
@@ -138,13 +129,21 @@ export default {
     user: function() {
       return this.$store.getters["Auth/user"];
     },
+
+    /* THEME */
     activeTheme() {
       return this.$store.getters["Themes/activeTheme"];
     },
+    defaultTheme: function() {
+      return this.$store.getters["Themes/defaultTheme"];
+    },
+    themeUserPrefs: function() {
+      return this.$store.getters["UserPrefs/themeUserPrefs"];
+    },
 
     /* NAV DRAWER */
-    navDrawerUserPref: function() {
-      return this.$store.getters["UserPrefs/navDrawerUserPref"];
+    navDrawerUserPrefs: function() {
+      return this.$store.getters["UserPrefs/navDrawerUserPrefs"];
     },
     navDrawerStaticSettings: function() {
       return this.$store.getters["AppState/navDrawerStaticSettings"];
@@ -164,20 +163,31 @@ export default {
     loadProfile() {
       this.$store.dispatch("Profiles/loadProfile", this.user);
     },
-    async loadUserPreferences() {
+
+    /* NAV DRAWER */
+    async loadNavDrawerUserPreferences() {
       await this.$store.dispatch(
-        "UserPrefs/loadUserPreferences",
+        "UserPrefs/loadNavDrawerUserPreferences",
         this.user.uid
       );
     },
-    applyNavDrawerUserPreference: async function() {
+    applyNavDrawerUserPreferences: async function() {
       await this.$store.dispatch(
-        "AppState/applyNavDrawerUserPreference",
-        this.navDrawerUserPref
+        "AppState/applyNavDrawerUserPreferences",
+        this.navDrawerUserPrefs
       );
-      /* Forces re-render of the nav drawer component */
-      this.key = !this.key;
-      this.$forceUpdate();
+    },
+
+    /* THEMES */
+    loadThemeUserPreferences: function() {
+      this.$store.dispatch("UserPrefs/loadThemeUserPreferences", this.user.uid);
+    },
+    setActiveTheme: function() {
+      if (this.themeUserPrefs) {
+        this.$store.commit("Themes/setActiveTheme", this.themeUserPrefs);
+      } else {
+        this.$store.commit("Themes/setActiveTheme", this.defaultTheme);
+      }
     },
     setTheme: function() {
       this.$vuetify.theme.themes.light.primary = this.$store.getters[
@@ -194,6 +204,8 @@ export default {
       ].info;
       return null;
     },
+
+    /* APP BAR */
     setAppbar() {
       var isDisabled = false;
       if (!this.user) {

@@ -165,6 +165,9 @@ export default {
     },
     themes: function() {
       return this.$store.getters["Themes/themes"];
+    },
+    user: function() {
+      return this.$store.getters["Auth/user"];
     }
   },
   methods: {
@@ -176,9 +179,12 @@ export default {
       return list;
     },
     apply() {
+      const payload = {
+        themeName: this.theme.selected.name,
+        uid: this.user.uid
+      };
       this.$store.commit("Themes/setActiveTheme", this.theme.selected.name);
-      //todo: persist
-      //todo: navigate to...
+      this.$store.dispatch("UserPrefs/saveThemeUserPreferences", payload);
     },
     preselect() {
       this.theme.selected = this.$store.getters["Themes/activeTheme"];
