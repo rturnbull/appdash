@@ -3,20 +3,16 @@
     <!-- NavDrawerHeader begins -->
     <v-list-item-group>
       <v-list-item two-line>
-        <v-list-item-avatar xcolor="accent">
-          <span
-            class="white--text headline"
-            :value="this.signedInProfileInitials"
-            >{{ signedInProfileInitials }}</span
-          >
+        <v-list-item-avatar>
+          <img src="https://randomuser.me/api/portraits/men/81.jpg" />
+
+          <span class="white--text headline"></span>
         </v-list-item-avatar>
 
         <v-list-item-content>
-          <v-list-item-title>Kērgiva</v-list-item-title>
+          <v-list-item-title>StartApp</v-list-item-title>
 
-          <v-list-item-subtitle>{{
-            this.signedInProfileName
-          }}</v-list-item-subtitle>
+          <v-list-item-subtitle>Douglas Green</v-list-item-subtitle>
         </v-list-item-content>
       </v-list-item>
     </v-list-item-group>
@@ -39,40 +35,20 @@ export default {
   name: "NavDrawerItems",
   data() {
     return {
-      profile: {},
       drawer: true,
       group: null,
       items: [
-        { text: "My Family", icon: "mdi-account-group", divider: false },
-        { text: "Appointments", icon: "mdi-calendar", divider: false },
-        { text: "", icon: "", divider: true },
+        { text: "Item 1", icon: "mdi-flag", divider: false },
+        { text: "Item 2", icon: "mdi-flag", divider: false },
+        { text: "Item 3", icon: "mdi-flag", divider: false },
         {
           text: "Preferences",
           icon: "mdi-account-settings",
           divider: false,
           to: "/preferences"
-        },
-        { text: "Give Feedback", icon: "mdi-message", divider: false },
-        { text: "Get Help", icon: "mdi-help-circle", divider: false }
+        }
       ]
     };
-  },
-  computed: {
-    /* 
-      signedInProfileInitials
-      Purloined the following from a post by "Shanoor", here:
-      https://stackoverflow.com/questions/33076177/getting-name-initials-using-js
-    */
-    signedInProfileInitials: function() {
-      if (this.signedInProfileName) {
-        const name = this.signedInProfileName; //name or null
-        var initials = name.match(/\b\w/g) || [];
-        initials = (
-          (initials.shift() || "") + (initials.pop() || "")
-        ).toUpperCase();
-        return initials;
-      }
-    }
   }
 };
 </script>

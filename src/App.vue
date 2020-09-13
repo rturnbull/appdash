@@ -18,18 +18,20 @@
         :permanent="this.navDrawerUserSettings.permanent"
         :temporary="this.navDrawerUserSettings.temporary"
       >
+        <NavDrawerItems />
       </v-navigation-drawer>
 
       <v-app-bar color="primary" dark clipped-left clipped-right app>
         <v-app-bar-nav-icon
+          v-if="this.showNavBarTriggerLeft"
           @click.native.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
 
         <v-spacer></v-spacer>
-        <v-btn href="" icon>
+        <v-btn href="/" icon>
           <v-toolbar-title>
             <v-img
-              src="kglogo_100sq.png"
+              src="./assets/logo.png"
               max-height="45px"
               max-width="45px"
               class="pt-5"
@@ -43,6 +45,11 @@
         <v-btn href="/signin" icon>
           <v-icon>mdi-account</v-icon>
         </v-btn>
+
+        <v-app-bar-nav-icon
+          v-if="this.showNavBarTriggerRight"
+          @click.native.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
       </v-app-bar>
 
       <!-- Sizes your content based upon application components -->
@@ -56,7 +63,7 @@
 
       <v-container>
         <v-footer color="primary" dark app>
-          (c) My App 2020
+          (c) StartApp 2020
           <!-- -->
         </v-footer>
       </v-container>
@@ -65,25 +72,21 @@
 </template>
 
 <script>
-/* import NavDrawer1 from "@/components/NavDrawer1.vue"; */
+import NavDrawerItems from "@/components/NavDrawerItems.vue";
 export default {
   name: "App",
-  /* components: { NavDrawer1 }, */
+  components: { NavDrawerItems },
   data: function() {
     return {
       drawer: false,
       key: false,
       group: null,
-      items: [
-        { text: "My Family", icon: "mdi-account-group", divider: false },
-        { text: "Appointments", icon: "mdi-calendar", divider: false },
-        { text: "", icon: "", divider: true },
-        { text: "Settings", icon: "mdi-account-settings", divider: false },
-        { text: "Give Feedback", icon: "mdi-message", divider: false },
-        { text: "Get Help", icon: "mdi-help-circle", divider: false }
-      ],
       appbar: {
-        signupButtonDisabled: false
+        signupButtonDisabled: false,
+        navBarTrigger: {
+          right: null,
+          show: null
+        }
       }
     };
   },
@@ -110,6 +113,7 @@ export default {
     navDrawerUserPrefs() {
       if (this.navDrawerUserPrefs) {
         this.applyNavDrawerUserPreferences();
+        this.evaluateNavBarTriggerPosition();
       }
     },
     themeUserPrefs() {
@@ -129,7 +133,18 @@ export default {
     user: function() {
       return this.$store.getters["Auth/user"];
     },
-
+    showNavBarTriggerLeft: function() {
+      var showLeft =
+        this.appbar.navBarTrigger.right === false &&
+        this.appbar.navBarTrigger.show === true;
+      return showLeft;
+    },
+    showNavBarTriggerRight: function() {
+      var showRight =
+        this.appbar.navBarTrigger.right === true &&
+        this.appbar.navBarTrigger.show === true;
+      return showRight;
+    },
     /* THEME */
     activeTheme() {
       return this.$store.getters["Themes/activeTheme"];
@@ -187,6 +202,20 @@ export default {
         this.$store.commit("Themes/setActiveTheme", this.themeUserPrefs);
       } else {
         this.$store.commit("Themes/setActiveTheme", this.defaultTheme);
+      }
+    },
+    evaluateNavBarTriggerPosition: function() {
+      var right = this.navDrawerUserSettings.triggerRight;
+      var show = this.navDrawerUserSettings.showTrigger;
+      if (show) {
+        this.appbar.navBarTrigger.show = true;
+        if (right) {
+          this.appbar.navBarTrigger.right = true;
+        } else {
+          this.appbar.navBarTrigger.right = false;
+        }
+      } else {
+        this.appbar.navBarTrigger.show = false;
       }
     },
     setTheme: function() {

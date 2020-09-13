@@ -6,22 +6,20 @@
   The adapter enables us to use a different persistence mechanism if desired, 
   without changing the internals of the app.
 */
-const navDrawerPrefs = {};
 
 export const UserPreferenceAdapter = {
   /* NAVIGATION DRAWER */
   loadNavDrawerUserPreferences: async function(uid) {
     uid == null;
     return {
-      navDrawerPreference: "MINI_PERMANENT",
-      navDrawerExpandOnHover: true,
+      navDrawerPreference: "DEFAULT_SLIDE_OUT",
+      navDrawerExpandOnHover: false,
       navDrawerDense: true,
-      navDrawerRight: true
+      navDrawerRight: false
     };
   },
   saveNavDrawerUserPreferences: async function(prefs, uid) {
     if (prefs && uid) {
-      navDrawerPrefs["navDrawerPreference"] = prefs;
       return null;
     }
   },

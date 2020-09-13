@@ -2,6 +2,12 @@
 const namespaced = true;
 
 const state = {
+  appBar: {
+    navBarTrigger: {
+      right: null,
+      show: null
+    }
+  },
   navDrawer: {
     navDrawerStaticSettings: {
       clipped: true,
@@ -19,7 +25,9 @@ const state = {
       mini: false,
       expandOnHover: false,
       permanent: false,
-      temporary: true
+      temporary: true,
+      triggerRight: false,
+      showTrigger: true
     },
     navDrawerOptions: [
       {
@@ -30,7 +38,9 @@ const state = {
         mini: false,
         expandOnHover: false,
         permanent: false,
-        temporary: true
+        temporary: true,
+        triggerRight: null,
+        showTrigger: true
       },
       {
         key: "DEFAULT_PERMANENT",
@@ -40,7 +50,9 @@ const state = {
         mini: false,
         expandOnHover: false,
         permanent: true,
-        temporary: false
+        temporary: false,
+        triggerRight: null,
+        showTrigger: false
       },
       {
         key: "MINI_SLIDE_OUT",
@@ -50,7 +62,9 @@ const state = {
         mini: true,
         expandOnHover: true,
         permanent: false,
-        temporary: true
+        temporary: true,
+        triggerRight: null,
+        showTrigger: true
       },
       {
         key: "MINI_PERMANENT",
@@ -60,7 +74,9 @@ const state = {
         mini: true,
         expandOnHover: true,
         permanent: true,
-        temporary: false
+        temporary: false,
+        triggerRight: null,
+        showTrigger: false
       }
     ]
   }
