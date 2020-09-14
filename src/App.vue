@@ -63,7 +63,7 @@
 
       <v-container>
         <v-footer color="primary" dark app>
-          (c) StartApp 2020
+          (c) AppDash 2020
           <!-- -->
         </v-footer>
       </v-container>

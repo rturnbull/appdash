@@ -1,11 +1,11 @@
 <template>
   <v-container xclass="grey lighten-5">
-    <v-row><h1>Preferences</h1></v-row>
-    <v-row no-gutters>
+    <p class="headline mb-0">Preferences</p>
+    <v-row xno-gutters>
       <!-- LEFT-HAND COLUMN -->
-      <v-col cols="3">
+      <v-col cols="4">
         <v-list rounded>
-          <!-- <v-subheader>REPORTS</v-subheader> -->
+          <!-- <v-subheader>Preferences</v-subheader> -->
           <v-list-item-group v-model="item" color="primary">
             <v-list-item v-for="(item, i) in items" :key="i">
               <v-list-item-icon>
@@ -18,7 +18,7 @@
           </v-list-item-group>
         </v-list>
       </v-col>
-      <v-col cols="9">
+      <v-col cols="8">
         <ThemePicker v-if="item === 0" />
         <NavDrawerPreferences v-else-if="item === 1" />
       </v-col>
