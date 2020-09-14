@@ -1,8 +1,74 @@
 <template>
   <div>
-    <v-row justify="center">
+    <v-container>
+      <v-layout row>
+        <v-flex xs12 md8 lg10>
+          <v-card class="grey lighten-5" elevation="0">
+            <v-card-text>
+              <p class="display-1 text--success">
+                Themes
+              </p>
+            </v-card-text>
+            <v-select
+              label="Choose your favorite theme"
+              width="44px"
+              :value="theme.selected.name"
+              :items="themeNames"
+              @change="onSelect"
+            ></v-select>
+
+            <v-card
+              :class="themeLayout.colorClass"
+              :color="this.theme.selected.primary"
+              text
+              tile
+              dark
+              :height="themeLayout.height"
+              :elevation="themeLayout.elevation"
+            >
+              Primary
+            </v-card>
+
+            <v-card
+              :class="themeLayout.colorClass"
+              :color="this.theme.selected.secondary"
+              text
+              tile
+              dark
+              :height="themeLayout.height"
+              :elevation="themeLayout.elevation"
+            >
+              Secondary
+            </v-card>
+
+            <v-card
+              :class="themeLayout.colorClass"
+              :color="this.theme.selected.accent"
+              text
+              tile
+              dark
+              :height="themeLayout.height"
+              :elevation="themeLayout.elevation"
+            >
+              Accent
+            </v-card>
+            <!-- BUTTONS -->
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn @click="apply" color="accent">
+                Apply
+              </v-btn>
+              <v-btn :to="navigate.to" text color="accent">
+                Cancel
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+
+    <!--     <v-row justify="center">
       <v-col :cols="themeLayout.cols">
-        <!-- COMPONENT MAIN CARD -->
         <v-card xclass="mx-auto" class="grey lighten-5" elevation="0">
           <v-card-text>
             <p class="display-1 text--success">
@@ -19,9 +85,7 @@
             ></v-select>
           </v-col>
 
-          <!-- THEME COLORS -->
           <v-container>
-            <!-- PRIMARY -->
             <v-row>
               <v-col :cols="themeLayout.cols" :sm="themeLayout.sm">
                 <v-card :class="themeLayout.class" flat tile>
@@ -46,7 +110,6 @@
               </v-col>
             </v-row>
 
-            <!-- SECONDARY -->
             <v-row>
               <v-col :cols="themeLayout.cols" :sm="themeLayout.sm">
                 <v-card :class="themeLayout.class" flat tile>
@@ -71,7 +134,6 @@
               </v-col>
             </v-row>
 
-            <!-- ACCENT -->
             <v-row>
               <v-col :cols="themeLayout.cols" :sm="themeLayout.sm">
                 <v-card :class="themeLayout.class" flat tile>
@@ -96,7 +158,6 @@
               </v-col>
             </v-row>
 
-            <!-- INFO -->
             <v-row>
               <v-col :cols="themeLayout.cols" :sm="themeLayout.sm">
                 <v-card :class="themeLayout.class" flat tile>
@@ -121,7 +182,6 @@
               </v-col>
             </v-row>
           </v-container>
-          <!-- BUTTONS -->
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn @click="apply" color="accent">
@@ -133,7 +193,7 @@
           </v-card-actions>
         </v-card>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
 </template>
 
