@@ -113,7 +113,6 @@ export default {
     navDrawerUserPrefs() {
       if (this.navDrawerUserPrefs) {
         this.applyNavDrawerUserPreferences();
-        //this.evaluateNavBarTriggerPosition();
       }
     },
     themeUserPrefs() {
@@ -133,15 +132,7 @@ export default {
     user: function() {
       return this.$store.getters["Auth/user"];
     },
-    /*   
-    navDrawerPreferences: {
-      navDrawerPreference: null,
-      navDrawerExpandOnHover: null,
-      navDrawerDense: null,
-      navDrawerRight: null
-    }, */
     showNavBarTriggerLeft: function() {
-      alert(JSON.stringify(this.navDrawerUserPrefs));
       var right = this.navDrawerUserPrefs.navDrawerRight;
       var pref = this.navDrawerUserPrefs.navDrawerPreference;
       switch (pref) {
@@ -169,18 +160,6 @@ export default {
           return null;
       }
     },
-    /*     showNavBarTriggerLeft: function() {
-      var showLeft =
-        this.appbar.navBarTrigger.right === false &&
-        this.appbar.navBarTrigger.show === true;
-      return showLeft;
-    },
-    showNavBarTriggerRight: function() {
-      var showRight =
-        this.appbar.navBarTrigger.right === true &&
-        this.appbar.navBarTrigger.show === true;
-      return showRight;
-    }, */
     /* THEME */
     activeTheme() {
       return this.$store.getters["Themes/activeTheme"];
@@ -240,20 +219,6 @@ export default {
         this.$store.commit("Themes/setActiveTheme", this.defaultTheme);
       }
     },
-    /*     evaluateNavBarTriggerPosition: function() {
-      var right = this.navDrawerUserSettings.triggerRight;
-      var show = this.navDrawerUserSettings.showTrigger;
-      if (show) {
-        this.appbar.navBarTrigger.show = true;
-        if (right) {
-          this.appbar.navBarTrigger.right = true;
-        } else {
-          this.appbar.navBarTrigger.right = false;
-        }
-      } else {
-        this.appbar.navBarTrigger.show = false;
-      }
-    }, */
     setTheme: function() {
       this.$vuetify.theme.themes.light.primary = this.$store.getters[
         "Themes/activeTheme"
